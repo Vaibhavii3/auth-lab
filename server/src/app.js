@@ -7,6 +7,8 @@ const authRoutes = require("./routes/authRoutes")
 const sessionAuthRoutes = require("./routes/sessionAuthRoutes");
 const jwtRoutes = require("./routes/jwtRoutes");
 const protectedRoutes = require("./routes/protected.routes");
+const adminRoutes = require("./routes/adminRoleRoutes");
+const userRoutes = require("./routes/user.routes");
 
 const app = express();
 
@@ -22,6 +24,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/session", sessionAuthRoutes);
 app.use("/api/jwt", jwtRoutes);
 app.use("/api", protectedRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Auth Lab API running");
