@@ -1,23 +1,35 @@
 /* ==========================================
    DEMO PAGE STYLES
+   Auth methods ke demo pages ke liye complete styling
    Inherits from index.css for global styles
    ========================================== */
 
+/* ==========================================================
+   BASE DEMO PAGE LAYOUT
+   ========================================================== */
+
+/* Main demo page container - Poora page wrap karta hai */
 .demo-page {
-  min-height: 100vh;
-  background: var(--cyber-black);
+  min-height: 100vh; /* Full viewport height */
+  background: var(--cyber-black); /* Dark background */
   width: 100%;
 }
 
-/* ========== DEMO HEADER ========== */
+/* ==========================================================
+   DEMO HEADER SECTION
+   Top section jisme title, icon aur tabs hain
+   ========================================================== */
+
+/* Demo page ka header - Fixed dark background with border */
 .demo-header {
   background: var(--cyber-dark);
-  border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+  border-bottom: 1px solid rgba(6, 182, 212, 0.2); /* Subtle cyan border */
   padding: 2rem 0 0;
   position: relative;
-  z-index: 10;
+  z-index: 10; /* Header ko top par rakhne ke liye */
 }
 
+/* Back button link - Homepage par jane ke liye */
 .back-link {
   display: inline-flex;
   align-items: center;
@@ -31,11 +43,13 @@
   border-radius: 6px;
 }
 
+/* Back link hover effect - Cyan glow */
 .back-link:hover {
   color: var(--cyber-cyan);
   background: rgba(6, 182, 212, 0.1);
 }
 
+/* Title aur icon ka section - Horizontally aligned */
 .demo-title-section {
   display: flex;
   align-items: center;
@@ -43,6 +57,7 @@
   margin-bottom: 2rem;
 }
 
+/* Demo icon container - Har auth method ka unique icon */
 .demo-icon {
   width: 80px;
   height: 80px;
@@ -56,6 +71,7 @@
   overflow: hidden;
 }
 
+/* Icon background glow effect */
 .demo-icon::before {
   content: '';
   position: absolute;
@@ -63,6 +79,7 @@
   opacity: 0.1;
 }
 
+/* Basic Auth specific icon styling - Orange color */
 .basic-icon {
   border-color: var(--basic-color);
   background: rgba(245, 158, 11, 0.1);
@@ -72,6 +89,7 @@
   background: var(--basic-color);
 }
 
+/* JWT Auth specific icon styling - Cyan color */
 .jwt-icon {
   border-color: var(--jwt-color);
   background: rgba(6, 182, 212, 0.1);
@@ -81,6 +99,7 @@
   background: var(--jwt-color);
 }
 
+/* Session Auth specific icon styling - Green color */
 .session-icon {
   border-color: var(--session-color);
   background: rgba(16, 185, 129, 0.1);
@@ -90,6 +109,7 @@
   background: var(--session-color);
 }
 
+/* Main demo title - Bold aur large */
 .demo-title {
   font-family: var(--font-display);
   font-size: 2.5rem;
@@ -98,6 +118,7 @@
   color: var(--text-primary);
 }
 
+/* Demo subtitle - Characteristics show karta hai */
 .demo-subtitle {
   font-family: var(--font-mono);
   font-size: 0.95rem;
@@ -105,13 +126,19 @@
   margin: 0.25rem 0 0;
 }
 
-/* Tabs */
+/* ==========================================================
+   TABS NAVIGATION
+   Learn, Demo, Inspect tabs ke liye
+   ========================================================== */
+
+/* Tabs container - Horizontal layout */
 .demo-tabs {
   display: flex;
   gap: 0.5rem;
   border-bottom: 1px solid rgba(6, 182, 212, 0.2);
 }
 
+/* Individual tab button */
 .tab {
   display: flex;
   align-items: center;
@@ -124,53 +151,52 @@
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
-  border-bottom: 3px solid transparent;
+  border-bottom: 3px solid transparent; /* Active indicator ke liye */
   transition: all 0.3s ease;
   position: relative;
 }
 
+/* Tab hover effect */
 .tab:hover {
   color: var(--cyber-cyan);
   background: rgba(6, 182, 212, 0.05);
 }
 
+/* Active tab styling - Cyan underline aur text */
 .tab-active {
   color: var(--cyber-cyan);
   border-bottom-color: var(--cyber-cyan);
 }
 
-.tab-emoji {
-  font-size: 1.25rem;
-  filter: grayscale(1);
-  transition: filter 0.3s ease;
-}
+/* ==========================================================
+   MAIN CONTENT LAYOUT
+   Two column grid - Main content aur Sidebar
+   ========================================================== */
 
-.tab-active .tab-emoji,
-.tab:hover .tab-emoji {
-  filter: grayscale(0);
-}
-
-.tab-label {
-  display: inline;
-}
-
-/* ========== DEMO CONTENT ========== */
+/* Demo content wrapper */
 .demo-content {
   padding: 3rem 0;
 }
 
+/* Main grid layout - Content left, Sidebar right */
 .demo-grid {
   display: grid;
-  grid-template-columns: 1fr 450px;
+  grid-template-columns: minmax(0, 1fr) 450px; /* Fluid content + Fixed 450px sidebar */
   gap: 3rem;
-  align-items: start;
+  align-items: start; /* Top align dono columns */
 }
 
+/* Left column - Main content area */
 .demo-main {
   max-width: 100%;
 }
 
-/* ========== CONTENT CARDS ========== */
+/* ==========================================================
+   CONTENT CARDS
+   Reusable card component for all sections
+   ========================================================== */
+
+/* Base card styling - Dark background with cyan border */
 .content-card {
   background: var(--cyber-slate);
   border: 1px solid rgba(6, 182, 212, 0.2);
@@ -179,6 +205,7 @@
   margin-bottom: 2rem;
 }
 
+/* Card heading - Large aur bold */
 .content-card h2 {
   font-family: var(--font-display);
   font-size: 1.75rem;
@@ -187,9 +214,10 @@
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.75rem; /* Icon ke liye space */
 }
 
+/* Card subheading */
 .content-card h3 {
   font-family: var(--font-display);
   font-size: 1.25rem;
@@ -198,6 +226,7 @@
   margin-bottom: 0.75rem;
 }
 
+/* Card small heading */
 .content-card h4 {
   font-family: var(--font-display);
   font-size: 1rem;
@@ -206,23 +235,31 @@
   margin-bottom: 0.5rem;
 }
 
+/* Card paragraph text */
 .content-card p {
   color: var(--text-secondary);
   line-height: 1.7;
   margin-bottom: 1rem;
 }
 
+/* Last card ko bottom margin nahi chahiye */
 .content-card:last-child {
   margin-bottom: 0;
 }
 
-/* ========== FLOW DIAGRAM ========== */
+/* ==========================================================
+   FLOW DIAGRAM
+   Step-by-step process visualization
+   ========================================================== */
+
+/* Flow diagram container - Vertical steps */
 .flow-diagram {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
+/* Individual flow step - Interactive hover effect */
 .flow-step {
   display: flex;
   gap: 1.5rem;
@@ -234,15 +271,17 @@
   transition: all 0.3s ease;
 }
 
+/* Flow step hover - Slide right effect */
 .flow-step:hover {
   background: rgba(6, 182, 212, 0.1);
   transform: translateX(8px);
 }
 
+/* Step number circle - Gradient background */
 .step-number {
   width: 36px;
   height: 36px;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Circle ko squish hone se bachata hai */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -254,6 +293,7 @@
   box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
 }
 
+/* Step content heading */
 .step-content h3 {
   font-size: 1.1rem;
   font-weight: 600;
@@ -261,12 +301,14 @@
   margin-bottom: 0.25rem;
 }
 
+/* Step description text */
 .step-content p {
   font-size: 0.9rem;
   color: var(--text-muted);
   margin: 0;
 }
 
+/* Arrow between steps */
 .flow-arrow {
   text-align: center;
   color: var(--cyber-cyan);
@@ -275,35 +317,51 @@
   opacity: 0.5;
 }
 
-/* ========== PROS/CONS ========== */
+/* ==========================================================
+   PROS/CONS GRID
+   Advantages aur Disadvantages side-by-side
+   ========================================================== */
+
+/* Pros/Cons container - Equal width columns */
 .pros-cons-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr; /* Dono cards equal width */
   gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  align-items: start; /* Top align karta hai dono cards ko */
 }
 
+/* Advantages card - Green themed */
 .pros-card {
   border-color: rgba(16, 185, 129, 0.3);
 }
 
 .pros-card h2 {
-  color: var(--session-color);
+  color: var(--session-color); /* Green */
 }
 
+/* Disadvantages card - Red themed */
 .cons-card {
   border-color: rgba(239, 68, 68, 0.3);
 }
 
 .cons-card h2 {
-  color: #ef4444;
+  color: #ef4444; /* Red */
 }
 
+/* Last item ko proper padding - Fix for bottom spacing */
+.cons-card li:last-child {
+  padding-bottom: 0.75rem;
+}
+
+/* List styling - Remove default bullets */
 .content-card ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* List item - Divider lines ke saath */
 .content-card li {
   padding: 0.75rem 0;
   color: var(--text-secondary);
@@ -311,33 +369,45 @@
   line-height: 1.6;
 }
 
+/* Last list item ko border nahi chahiye */
 .content-card li:last-child {
   border-bottom: none;
 }
 
-/* ========== TOKEN STRUCTURE ========== */
+/* ==========================================================
+   TOKEN STRUCTURE (JWT specific)
+   Header, Payload, Signature breakdown
+   ========================================================== */
+
+/* Token parts grid - 3 equal columns for JWT token parts */
 .token-structure {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* Teen equal width columns */
   gap: 1rem;
   margin-top: 1.5rem;
+  width: 100%; /* Full width use karta hai */
 }
 
+/* Individual token part card - Header, Payload, Signature */
 .token-part {
   padding: 1.5rem;
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid;
   border-radius: 8px;
+  min-width: 0; /* Allow shrinking on smaller screens */
 }
 
+/* Header part - Orange border for algorithm section */
 .header-part {
   border-color: rgba(245, 158, 11, 0.3);
 }
 
+/* Payload part - Cyan border for claims section */
 .payload-part {
   border-color: rgba(6, 182, 212, 0.3);
 }
 
+/* Signature part - Purple border for verification section */
 .signature-part {
   border-color: rgba(168, 85, 247, 0.3);
 }
@@ -348,6 +418,7 @@
   margin-bottom: 1rem;
 }
 
+/* Token part code block - JSON display ke liye */
 .token-part pre {
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -356,8 +427,10 @@
   background: rgba(0, 0, 0, 0.3);
   padding: 1rem;
   border-radius: 6px;
-  overflow-x: auto;
+  overflow-x: auto; /* Long content ke liye horizontal scroll */
   margin-bottom: 1rem;
+  word-break: break-all; /* Long strings wrap karenge */
+  white-space: pre-wrap; /* Line breaks allow karta hai */
 }
 
 .token-part p {
@@ -366,25 +439,36 @@
   margin: 0;
 }
 
-/* ========== CODE BLOCKS ========== */
+/* ==========================================================
+   CODE BLOCKS
+   Syntax highlighted code examples
+   ========================================================== */
+
+/* Code example card pre styling */
 .code-example-card pre {
   background: var(--cyber-black);
   border: 1px solid rgba(6, 182, 212, 0.2);
   border-radius: 8px;
   padding: 1.5rem;
-  overflow-x: auto;
+  overflow-x: auto; /* Horizontal scroll for long code */
   margin-top: 1rem;
 }
 
+/* Code block text - Light blue color */
 .code-block {
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  line-height: 1.8;
-  color: #a5d6ff;
+  line-height: 1.8; /* Readable line height */
+  color: #a5d6ff; /* Light blue for code */
   margin: 0;
 }
 
-/* ========== DEMO FORM ========== */
+/* ==========================================================
+   DEMO FORM
+   Interactive demo form with inputs
+   ========================================================== */
+
+/* Demo form card - Form inputs ke liye wrapper */
 .demo-form-card {
   background: var(--cyber-slate);
   border: 1px solid rgba(6, 182, 212, 0.2);
@@ -393,6 +477,7 @@
   margin-bottom: 2rem;
 }
 
+/* Form group - Label + input wrapper */
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -401,6 +486,7 @@
   margin-bottom: 0;
 }
 
+/* Form label styling */
 .form-group label {
   display: block;
   font-weight: 600;
@@ -409,6 +495,7 @@
   font-size: 0.95rem;
 }
 
+/* Form input field - Dark themed */
 .form-input {
   width: 100%;
   padding: 0.875rem 1rem;
@@ -421,10 +508,12 @@
   transition: all 0.3s ease;
 }
 
+/* Input placeholder text */
 .form-input::placeholder {
   color: var(--text-muted);
 }
 
+/* Input focus state - Cyan glow */
 .form-input:focus {
   outline: none;
   border-color: var(--cyber-cyan);
@@ -432,14 +521,17 @@
   box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
 }
 
+/* Password input wrapper - Eye icon ke liye */
 .password-input-wrapper {
   position: relative;
 }
 
+/* Password input me extra padding for eye icon */
 .password-input-wrapper .form-input {
   padding-right: 3rem;
 }
 
+/* Password toggle button - Eye icon */
 .password-toggle {
   position: absolute;
   right: 1rem;
@@ -460,6 +552,7 @@
   color: var(--cyber-cyan);
 }
 
+/* Large button - Full width */
 .btn-large {
   width: 100%;
   padding: 1rem 2rem;
@@ -468,6 +561,7 @@
   margin-top: 1.5rem;
 }
 
+/* Demo hint box - Test credentials dikhata hai */
 .demo-hint {
   margin-top: 1.5rem;
   padding: 1rem;
@@ -479,6 +573,7 @@
   text-align: center;
 }
 
+/* Inline code in hint */
 .demo-hint code {
   font-family: var(--font-mono);
   color: var(--cyber-cyan);
@@ -487,7 +582,12 @@
   border-radius: 4px;
 }
 
-/* ========== ALERTS ========== */
+/* ==========================================================
+   ALERTS
+   Success aur Error messages
+   ========================================================== */
+
+/* Base alert styling */
 .alert {
   display: flex;
   align-items: center;
@@ -499,24 +599,32 @@
   font-weight: 500;
 }
 
+/* Success alert - Green themed */
 .alert-success {
   background: rgba(16, 185, 129, 0.1);
   border-color: rgba(16, 185, 129, 0.3);
   color: var(--session-color);
 }
 
+/* Error alert - Red themed */
 .alert-error {
   background: rgba(239, 68, 68, 0.1);
   border-color: rgba(239, 68, 68, 0.3);
   color: #ef4444;
 }
 
-/* ========== RESPONSE CARD ========== */
+/* ==========================================================
+   RESPONSE CARD
+   API response display
+   ========================================================== */
+
+/* Response card - Darker background */
 .response-card {
   background: var(--cyber-dark);
   border-color: rgba(6, 182, 212, 0.3);
 }
 
+/* Card header with copy button */
 .card-header-row {
   display: flex;
   justify-content: space-between;
@@ -524,6 +632,7 @@
   margin-bottom: 1rem;
 }
 
+/* Icon button - Copy functionality */
 .btn-icon {
   background: rgba(6, 182, 212, 0.1);
   border: 1px solid rgba(6, 182, 212, 0.2);
@@ -542,6 +651,7 @@
   border-color: var(--cyber-cyan);
 }
 
+/* Response JSON block */
 .response-block {
   background: var(--cyber-black);
   border: 1px solid rgba(6, 182, 212, 0.2);
@@ -552,10 +662,11 @@
   line-height: 1.8;
   color: #a5d6ff;
   overflow-x: auto;
-  white-space: pre;
+  white-space: pre; /* JSON formatting preserve karta hai */
   margin: 0;
 }
 
+/* Secondary button - Outline style */
 .btn-secondary {
   display: inline-flex;
   align-items: center;
@@ -578,12 +689,18 @@
   box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
 }
 
-/* ========== INSPECT SECTION ========== */
+/* ==========================================================
+   INSPECT SECTION
+   Token/Credentials decoding display
+   ========================================================== */
+
+/* Token display card - Darker background */
 .token-display-card {
   background: var(--cyber-dark);
   border-color: rgba(6, 182, 212, 0.3);
 }
 
+/* Toggle button for show/hide */
 .btn-toggle {
   display: flex;
   align-items: center;
@@ -605,11 +722,13 @@
   border-color: var(--cyber-cyan);
 }
 
+/* Token display container - Copy button ke liye relative */
 .token-display {
   position: relative;
   margin-top: 1rem;
 }
 
+/* Token text display - Scrollable */
 .token-text {
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -619,13 +738,14 @@
   border: 1px solid rgba(6, 182, 212, 0.2);
   border-radius: 6px;
   padding: 1rem;
-  padding-right: 3rem;
+  padding-right: 3rem; /* Copy button ke liye space */
   overflow-x: auto;
-  word-break: break-all;
+  word-break: break-all; /* Long tokens ko wrap karta hai */
   white-space: pre-wrap;
   margin: 0;
 }
 
+/* Copy button - Positioned inside token display */
 .btn-copy {
   position: absolute;
   top: 1rem;
@@ -646,34 +766,39 @@
   background: rgba(6, 182, 212, 0.3);
 }
 
+/* Decoded sections container */
 .decoded-sections {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
+/* Decoded card - Darker background */
 .decoded-card {
   background: var(--cyber-dark);
 }
 
+/* Decoded card variants - Colored left borders */
 .header-decoded {
-  border-left: 4px solid var(--basic-color);
+  border-left: 4px solid var(--basic-color); /* Orange */
 }
 
 .payload-decoded {
-  border-left: 4px solid var(--jwt-color);
+  border-left: 4px solid var(--jwt-color); /* Cyan */
 }
 
 .signature-decoded {
-  border-left: 4px solid var(--cyber-purple);
+  border-left: 4px solid var(--cyber-purple); /* Purple */
 }
 
+/* Decoded description text */
 .decoded-desc {
   font-size: 0.9rem;
   color: var(--text-muted);
   margin-bottom: 1rem;
 }
 
+/* Decoded content block */
 .decoded-block {
   background: var(--cyber-black);
   border: 1px solid rgba(6, 182, 212, 0.2);
@@ -687,12 +812,14 @@
   margin: 0;
 }
 
+/* Payload details section - Claims breakdown */
 .payload-details {
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid rgba(6, 182, 212, 0.2);
 }
 
+/* Detail row - Key-value pairs */
 .detail-row {
   display: flex;
   justify-content: space-between;
@@ -701,20 +828,22 @@
 }
 
 .detail-row span:first-child {
-  color: var(--text-muted);
+  color: var(--text-muted); /* Key */
 }
 
 .detail-row span:last-child {
-  color: var(--text-primary);
+  color: var(--text-primary); /* Value */
   font-family: var(--font-mono);
 }
 
+/* Signature block - Hash display */
 .signature-block {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   word-break: break-all;
 }
 
+/* Signature note - Security warning */
 .signature-note {
   margin-top: 1rem;
   padding: 1rem;
@@ -725,12 +854,17 @@
   color: var(--basic-color);
 }
 
-/* Empty State */
+/* ==========================================================
+   EMPTY STATE
+   Jab koi data nahi hai tab display karta hai
+   ========================================================== */
+
 .empty-state {
   text-align: center;
   padding: 4rem 2rem;
 }
 
+/* Large emoji icon */
 .empty-icon {
   font-size: 4rem;
   margin-bottom: 1rem;
@@ -748,11 +882,17 @@
   margin-bottom: 2rem;
 }
 
-/* ========== SIDEBAR ========== */
+/* ==========================================================
+   SIDEBAR
+   Right side fixed panel - Live monitoring
+   ========================================================== */
+
+/* Sidebar container */
 .demo-sidebar {
   position: relative;
 }
 
+/* Sidebar card - Reusable card component */
 .sidebar-card {
   background: var(--cyber-slate);
   border: 1px solid rgba(6, 182, 212, 0.2);
@@ -765,6 +905,7 @@
   margin-bottom: 0;
 }
 
+/* Sidebar header - Icon + title */
 .sidebar-header {
   display: flex;
   align-items: center;
@@ -783,6 +924,7 @@
   overflow: visible;
 }
 
+/* Request details section headings */
 .request-details h4 {
   font-size: 0.85rem;
   font-weight: 600;
@@ -797,6 +939,7 @@
   margin-top: 0;
 }
 
+/* Code blocks for endpoint, headers etc */
 .endpoint-block,
 .request-block,
 .headers-block {
@@ -813,6 +956,7 @@
   margin: 0;
 }
 
+/* Status badge - Success/Error indicator */
 .status-badge {
   display: inline-block;
   padding: 0.5rem 1rem;
@@ -828,7 +972,11 @@
   color: var(--session-color);
 }
 
-/* Security Tips */
+/* ==========================================================
+   SECURITY TIPS SECTION
+   Best practices sidebar
+   ========================================================== */
+
 .security-tips h3 {
   font-size: 1.1rem;
   font-weight: 600;
@@ -857,7 +1005,11 @@
   border-bottom: none;
 }
 
-/* Use Cases */
+/* ==========================================================
+   USE CASES SECTION
+   Good vs Bad scenarios
+   ========================================================== */
+
 .use-cases-list {
   list-style: none;
   padding: 0;
@@ -886,7 +1038,11 @@
   color: var(--text-muted);
 }
 
-/* ========== SPINNER ========== */
+/* ==========================================================
+   LOADING SPINNER
+   Animation for async operations
+   ========================================================== */
+
 .spinner {
   display: inline-block;
   width: 18px;
@@ -901,11 +1057,16 @@
   to { transform: rotate(360deg); }
 }
 
-/* ========== SESSION SPECIFIC ========== */
+/* ==========================================================
+   SESSION AUTH SPECIFIC STYLES
+   Cookie-based authentication components
+   ========================================================== */
+
 .session-active {
   margin-top: 0;
 }
 
+/* Session info card - Green themed */
 .session-info-card {
   background: var(--cyber-dark);
   border-color: rgba(16, 185, 129, 0.3);
@@ -922,12 +1083,14 @@
   margin-top: 1.5rem;
 }
 
+/* Session ID display */
 .session-id {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--cyber-cyan);
 }
 
+/* Danger button - Logout action */
 .btn-danger {
   background: rgba(239, 68, 68, 0.1);
   border: 2px solid #ef4444;
@@ -950,20 +1113,40 @@
   box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
 }
 
-/* ========== BASIC AUTH SPECIFIC ========== */
+/* ==========================================================
+   BASIC AUTH SPECIFIC STYLES
+   Encoding example aur implementation cards
+   ========================================================== */
+
+/* Implementation Cards Grid - Backend aur Frontend ko side-by-side dikhata hai */
+.implementation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Equal width dono cards */
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Encoding demo - Three step process with arrows */
 .encoding-demo {
   display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr;
+  grid-template-columns: minmax(200px, 1fr) auto minmax(200px, 1fr) auto minmax(200px, 1fr); /* Flexible columns with minimum width */
   gap: 1rem;
   align-items: center;
   margin-top: 1.5rem;
+  overflow: visible; /* Allow content to be visible */
+  position: relative;
+  width: 100%; /* Full width use karta hai */
 }
 
+/* Individual encoding step card */
 .encoding-step {
   padding: 1.5rem;
   background: rgba(6, 182, 212, 0.05);
   border: 1px solid rgba(6, 182, 212, 0.2);
   border-radius: 8px;
+  position: relative;
+  z-index: 2;
+  min-width: 0; /* Allow content to shrink */
 }
 
 .encoding-step h3 {
@@ -973,6 +1156,7 @@
   margin-bottom: 0.75rem;
 }
 
+/* Code block inside encoding step */
 .encoding-step pre {
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -980,16 +1164,23 @@
   background: var(--cyber-black);
   padding: 1rem;
   border-radius: 6px;
-  overflow-x: auto;
+  overflow-x: auto; /* Horizontal scroll for long text */
   margin: 0;
+  word-break: break-all; /* Long strings ko wrap karta hai */
+  white-space: pre-wrap; /* Line breaks allow karta hai */
 }
 
+/* Arrow between encoding steps */
 .encoding-arrow {
   color: var(--cyber-cyan);
   font-size: 1.5rem;
   font-weight: bold;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0; /* Arrow ko compress nahi hone deta */
 }
 
+/* Warning note below encoding demo */
 .encoding-note {
   margin-top: 1rem;
   padding: 1rem;
@@ -1000,23 +1191,27 @@
   color: var(--basic-color);
 }
 
+/* Encoding flow - Vertical arrows for inspect tab */
 .encoding-flow {
   text-align: center;
   margin: 1.5rem 0;
 }
 
+/* Downward arrow */
 .flow-arrow-down {
   color: var(--cyber-cyan);
   font-size: 2rem;
   line-height: 1;
 }
 
+/* Flow label text */
 .flow-label {
   font-size: 0.85rem;
   color: var(--text-muted);
   margin-top: 0.5rem;
 }
 
+/* Security warning card - Orange themed */
 .security-warning {
   background: rgba(245, 158, 11, 0.1);
   border-color: rgba(245, 158, 11, 0.3);
@@ -1026,6 +1221,7 @@
   color: var(--basic-color);
 }
 
+/* Warning demo section - Console example */
 .warning-demo {
   margin-top: 1.5rem;
   padding: 1rem;
@@ -1047,7 +1243,12 @@
   margin: 0;
 }
 
-/* ========== SESSION AUTH SPECIFIC ========== */
+/* ==========================================================
+   SESSION AUTH SPECIFIC STYLES - CONTINUED
+   Storage options aur cookie attributes
+   ========================================================== */
+
+/* Storage options grid - Memory, localStorage, Cookies */
 .storage-options {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1055,6 +1256,7 @@
   margin-top: 1.5rem;
 }
 
+/* Individual storage option card */
 .storage-option {
   padding: 1.5rem;
   background: rgba(6, 182, 212, 0.05);
@@ -1082,6 +1284,7 @@
   margin-bottom: 0;
 }
 
+/* Security flags - HttpOnly, Secure, SameSite */
 .security-flags {
   display: flex;
   flex-direction: column;
@@ -1089,6 +1292,7 @@
   margin-top: 1rem;
 }
 
+/* Individual flag item */
 .flag-item {
   padding: 1rem;
   background: rgba(6, 182, 212, 0.05);
@@ -1108,6 +1312,7 @@
   margin: 0;
 }
 
+/* Cookie attributes table */
 .cookie-attributes {
   display: flex;
   flex-direction: column;
@@ -1115,6 +1320,7 @@
   margin-top: 1rem;
 }
 
+/* Attribute row - Name, Value, Description */
 .attribute-row {
   display: grid;
   grid-template-columns: 120px 100px 1fr;
@@ -1141,6 +1347,7 @@
   font-size: 0.85rem;
 }
 
+/* Security info card - Green themed */
 .security-info {
   background: rgba(16, 185, 129, 0.1);
   border-color: rgba(16, 185, 129, 0.3);
@@ -1150,76 +1357,100 @@
   color: var(--session-color);
 }
 
-/* ========== RESPONSIVE ========== */
+/* ==========================================================
+   RESPONSIVE DESIGN
+   Mobile aur tablet layouts
+   ========================================================== */
+
+/* Tablet aur small desktop - 1024px se niche */
 @media (max-width: 1024px) {
+  /* Single column layout */
   .demo-grid {
     grid-template-columns: 1fr;
   }
   
+  /* Sidebar static position - Scroll ke saath move karega */
   .demo-sidebar {
     position: static;
     margin-top: 3rem;
   }
   
+  /* Single column for token structure */
   .token-structure {
     grid-template-columns: 1fr;
   }
   
+  /* Single column for storage options */
   .storage-options {
     grid-template-columns: 1fr;
   }
 }
 
+/* Mobile devices - 768px se niche */
 @media (max-width: 768px) {
   .demo-header {
     top: 0;
   }
   
+  /* Smaller title */
   .demo-title {
     font-size: 2rem;
   }
   
+  /* Smaller icon */
   .demo-icon {
     width: 60px;
     height: 60px;
     font-size: 2rem;
   }
   
+  /* Single column pros/cons */
   .pros-cons-grid {
     grid-template-columns: 1fr;
   }
   
-  .encoding-demo {
+  /* Single column implementation */
+  .implementation-grid {
     grid-template-columns: 1fr;
   }
   
+  /* Vertical encoding demo */
+  .encoding-demo {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  /* Rotate arrow for vertical layout */
   .encoding-arrow {
     transform: rotate(90deg);
   }
   
+  /* Single column attribute rows */
   .attribute-row {
     grid-template-columns: 1fr;
     gap: 0.5rem;
   }
   
-  .tab-label {
-    display: none;
-  }
-  
+  /* Larger tabs for touch */
   .tab {
     padding: 1rem;
+    font-size: 1.25rem;
   }
 }
 
+/* Small mobile - 480px se niche */
 @media (max-width: 480px) {
+  /* Reduced padding */
   .demo-content {
     padding: 2rem 0;
   }
   
+  /* Smaller card padding */
   .content-card {
     padding: 1.5rem;
   }
   
+  /* Smaller form padding */
   .demo-form-card {
     padding: 2rem;
   }

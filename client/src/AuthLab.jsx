@@ -95,7 +95,7 @@ const AuthLab = () => {
                 Explore Methods
                 <ArrowRight size={18} />
               </a>
-              <a href="https://github.com/yourusername/auth-lab" 
+              <a href="https://github.com/vaibhavii3/auth-lab" 
                  className="btn-secondary"
                  target="_blank"
                  rel="noopener noreferrer">

@@ -52,9 +52,9 @@ const BasicAuthDemo = () => {
   };
 
   const tabs = [
-    { id: 'learn', label: '📚 Learn', emoji: '📚' },
-    { id: 'demo', label: '🧪 Try It', emoji: '🧪' },
-    { id: 'inspect', label: '🔍 Inspect', emoji: '🔍' }
+    { id: 'learn', label: '📚 Learn' },
+    { id: 'demo', label: '🧪 Try It' },
+    { id: 'inspect', label: '🔍 Inspect' }
   ];
 
   return (
@@ -83,8 +83,7 @@ const BasicAuthDemo = () => {
                 className={`tab ${activeTab === tab.id ? 'tab-active' : ''}`}
                 onClick={() => setActiveTab(tab.id)}
               >
-                <span className="tab-emoji">{tab.emoji}</span>
-                <span className="tab-label">{tab.label}</span>
+                {tab.label}
               </button>
             ))}
           </div>
@@ -208,12 +207,13 @@ const BasicAuthDemo = () => {
                     </p>
                   </div>
 
-                  <div className="content-card code-example-card">
-                    <h2>
-                      <Code size={24} />
-                      Backend Implementation
-                    </h2>
-                    <pre className="code-block">
+                  <div className="implementation-grid">
+                    <div className="content-card code-example-card">
+                      <h2>
+                        <Code size={24} />
+                        Backend Implementation
+                      </h2>
+                      <pre className="code-block">
 {`const basicAuth = (req, res, next) => {
   const authHeader = req.headers.authorization;
   
@@ -245,12 +245,12 @@ const BasicAuthDemo = () => {
   req.user = user;
   next();
 };`}
-                    </pre>
-                  </div>
+                      </pre>
+                    </div>
 
-                  <div className="content-card code-example-card">
-                    <h2>Frontend Implementation</h2>
-                    <pre className="code-block">
+                    <div className="content-card code-example-card">
+                      <h2>Frontend Implementation</h2>
+                      <pre className="code-block">
 {`// Encode credentials
 const username = 'demo';
 const password = 'password123';
@@ -264,7 +264,8 @@ fetch('https://api.example.com/data', {
 })
 .then(res => res.json())
 .then(data => console.log(data));`}
-                    </pre>
+                      </pre>
+                    </div>
                   </div>
                 </div>
               )}

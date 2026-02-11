@@ -84,9 +84,9 @@ const SessionDemo = () => {
   };
 
   const tabs = [
-    { id: 'learn', label: '📚 Learn', emoji: '📚' },
-    { id: 'demo', label: '🧪 Try It', emoji: '🧪' },
-    { id: 'inspect', label: '🔍 Inspect', emoji: '🔍' }
+    { id: 'learn', label: '📚 Learn' },
+    { id: 'demo', label: '🧪 Try It' },
+    { id: 'inspect', label: '🔍 Inspect' }
   ];
 
   return (
@@ -115,8 +115,7 @@ const SessionDemo = () => {
                 className={`tab ${activeTab === tab.id ? 'tab-active' : ''}`}
                 onClick={() => setActiveTab(tab.id)}
               >
-                <span className="tab-emoji">{tab.emoji}</span>
-                <span className="tab-label">{tab.label}</span>
+                {tab.label}
               </button>
             ))}
           </div>

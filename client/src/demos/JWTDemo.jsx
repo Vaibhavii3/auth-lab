@@ -79,9 +79,9 @@ const JWTDemo = () => {
   };
 
   const tabs = [
-    { id: 'learn', label: '📚 Learn', emoji: '📚' },
-    { id: 'demo', label: '🧪 Try It', emoji: '🧪' },
-    { id: 'inspect', label: '🔍 Inspect', emoji: '🔍' }
+    { id: 'learn', label: '📚 Learn' },
+    { id: 'demo', label: '🧪 Try It' },
+    { id: 'inspect', label: '🔍 Inspect' }
   ];
 
   return (
@@ -110,8 +110,7 @@ const JWTDemo = () => {
                 className={`tab ${activeTab === tab.id ? 'tab-active' : ''}`}
                 onClick={() => setActiveTab(tab.id)}
               >
-                <span className="tab-emoji">{tab.emoji}</span>
-                <span className="tab-label">{tab.label}</span>
+                {tab.label}
               </button>
             ))}
           </div>
@@ -244,12 +243,13 @@ const JWTDemo = () => {
                     </div>
                   </div>
 
-                  <div className="content-card code-example-card">
-                    <h2>
-                      <Code size={24} />
-                      Backend Implementation
-                    </h2>
-                    <pre className="code-block">
+                  <div className="implementation-grid">
+                    <div className="content-card code-example-card">
+                      <h2>
+                        <Code size={24} />
+                        Backend Implementation
+                      </h2>
+                      <pre className="code-block">
 {`const jwt = require('jsonwebtoken');
 
 // Generate JWT
@@ -285,7 +285,38 @@ const authenticate = (req, res, next) => {
     res.status(401).json({ error: 'Invalid token' });
   }
 };`}
-                    </pre>
+                      </pre>
+                    </div>
+
+                    <div className="content-card code-example-card">
+                      <h2>Frontend Implementation</h2>
+                      <pre className="code-block">
+{`// Login and store token
+const login = async (email, password) => {
+  const res = await fetch('/api/auth/jwt/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+  
+  const { token } = await res.json();
+  localStorage.setItem('jwt_token', token);
+};
+
+// Use token in requests
+const fetchProtected = async () => {
+  const token = localStorage.getItem('jwt_token');
+  
+  const res = await fetch('/api/protected', {
+    headers: {
+      'Authorization': \`Bearer \${token}\`
+    }
+  });
+  
+  return res.json();
+};`}
+                      </pre>
+                    </div>
                   </div>
                 </div>
               )}

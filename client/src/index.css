@@ -1,11 +1,6 @@
-/* ==========================================
-   AUTH-LAB - Main Entry Stylesheet
-   ========================================== */
 
-/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Oxanium:wght@400;600;800&display=swap');
 
-/* Root Variables - Cyberpunk Tech Design System */
 :root {
   /* Colors - Cyberpunk Neon Palette */
   --cyber-black: #0a0e27;

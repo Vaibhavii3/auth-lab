@@ -35,7 +35,7 @@ function AppContent() {
             
             <nav className="nav">
               <a
-                href="https://github.com/yourusername/auth-lab"
+                href="https://github.com/vaibhavii3/auth-lab"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="nav-link"
@@ -67,7 +67,7 @@ function AppContent() {
       {!isDemoPage && (
         <footer className="footer">
           <div className="container">
-            <p>&copy; 2024 Auth-Lab. Built for learning.</p>
+            <p>&copy; 2026 Auth-Lab. Built for learning.</p>
             <p className="footer-accent">// Explore authentication methods interactively</p>
           </div>
         </footer>

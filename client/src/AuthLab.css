@@ -33,7 +33,6 @@
   color: var(--cyber-cyan);
   font-weight: 500;
   margin-bottom: 2rem;
-  animation: float 3s ease-in-out infinite;
 }
 
 .badge-dot {
@@ -42,7 +41,6 @@
   background: var(--cyber-cyan);
   border-radius: 50%;
   box-shadow: var(--glow-cyan);
-  animation: pulse-glow 2s ease-in-out infinite;
 }
 
 .hero-title {
