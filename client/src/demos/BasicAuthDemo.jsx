@@ -21,7 +21,7 @@ const BasicAuthDemo = () => {
     const credentials = btoa(`${username}:${password}`);
     
     try {
-      const res = await fetch('http://localhost:5000/api/auth/basic/protected', {
+      const res = await fetch('http://localhost:5000/api/auth/protected', {
         headers: {
           'Authorization': `Basic ${credentials}`
         }
