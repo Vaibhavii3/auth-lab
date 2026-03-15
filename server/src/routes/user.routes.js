@@ -1,13 +1,9 @@
 const express = require("express");
 const { protect } = require("../middlewares/jwtAuth");
+const { getProfile } = require("../controllers/protectedController");
 
 const router = express.Router();
 
-router.get("/profile", protect, (req, res) => {
-  res.json({
-    message: "User profile",
-    user: req.user
-  });
-});
+router.get("/profile", protect, getProfile);
 
 module.exports = router;

@@ -118,6 +118,15 @@
   background: var(--apikey-color);
 }
 
+/* Magic Link demo icon */
+.magiclink-icon {
+  border-color: var(--magiclink-color);
+  background: rgba(244, 63, 94, 0.1);
+}
+.magiclink-icon::before {
+  background: var(--magiclink-color);
+}
+
 /* Main demo title - Bold aur large */
 .demo-title {
   font-family: var(--font-display);

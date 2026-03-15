@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Key, Cookie, Zap, Lock, CheckCircle, XCircle, ArrowRight, KeyRound } from 'lucide-react';
+import { Shield, Key, Cookie, Zap, Lock, CheckCircle, XCircle, ArrowRight, KeyRound, Link2 } from 'lucide-react';
 import './AuthLab.css';
 
 const AuthLab = () => {
@@ -66,6 +66,21 @@ const AuthLab = () => {
       pros: ['Simple', 'Easy to revoke', 'No cookies/sessions'],
       cons: ['Key can leak', 'No built-in expiry', 'One key per client'],
       emoji: '🔐'
+    },
+    {
+      id: 'magiclink',
+      name: 'Magic Link',
+      icon: Link2,
+      color: 'rose',
+      gradient: 'linear-gradient(135deg, #f43f5e 0%, #e11d48 100%)',
+      description: 'Passwordless login: enter email, get a one-time link, click to sign in',
+      difficulty: 'Intermediate',
+      security: '⭐⭐⭐⭐',
+      useCase: 'Passwordless, Email-first apps',
+      link: '/demo/magic-link',
+      pros: ['No password', 'One-time link', 'Simple UX'],
+      cons: ['Depends on email', 'Need email sending in prod', 'Link can be forwarded'],
+      emoji: '✉️'
     }
   ];
 
@@ -275,6 +290,10 @@ const authenticate = async () => {
                     <KeyRound size={18} />
                     API Key
                   </th>
+                  <th className="th-magiclink">
+                    <Link2 size={18} />
+                    Magic Link
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -284,12 +303,14 @@ const authenticate = async () => {
                   <td>Client (localStorage/cookie)</td>
                   <td>Server (database/memory)</td>
                   <td>Header (X-API-Key)</td>
+                  <td>Email + one-time link</td>
                 </tr>
                 <tr>
                   <td className="feature-name">Scalability</td>
                   <td>⭐⭐</td>
                   <td>⭐⭐⭐⭐⭐</td>
                   <td>⭐⭐⭐</td>
+                  <td>⭐⭐⭐⭐</td>
                   <td>⭐⭐⭐⭐</td>
                 </tr>
                 <tr>
@@ -298,6 +319,7 @@ const authenticate = async () => {
                   <td>⭐⭐⭐⭐</td>
                   <td>⭐⭐⭐⭐⭐</td>
                   <td>⭐⭐⭐</td>
+                  <td>⭐⭐⭐⭐</td>
                 </tr>
                 <tr>
                   <td className="feature-name">Implementation</td>
@@ -305,12 +327,14 @@ const authenticate = async () => {
                   <td>Medium</td>
                   <td>Medium</td>
                   <td>Simple</td>
+                  <td>Medium</td>
                 </tr>
                 <tr>
                   <td className="feature-name">Cross-Domain</td>
                   <td>✅ Yes</td>
                   <td>✅ Yes</td>
                   <td>⚠️ CORS Issues</td>
+                  <td>✅ Yes</td>
                   <td>✅ Yes</td>
                 </tr>
                 <tr>
@@ -319,12 +343,14 @@ const authenticate = async () => {
                   <td>❌ Difficult</td>
                   <td>✅ Easy</td>
                   <td>✅ Easy</td>
+                  <td>✅ One-time use</td>
                 </tr>
                 <tr>
                   <td className="feature-name">Mobile Apps</td>
                   <td>✅ Good</td>
                   <td>✅ Best</td>
                   <td>⚠️ Challenging</td>
+                  <td>✅ Good</td>
                   <td>✅ Good</td>
                 </tr>
                 <tr>
@@ -333,6 +359,7 @@ const authenticate = async () => {
                   <td>Very Low</td>
                   <td>Medium-High</td>
                   <td>Low</td>
+                  <td>Low-Medium</td>
                 </tr>
               </tbody>
             </table>
@@ -362,6 +389,10 @@ const authenticate = async () => {
               <Link to="/demo/apikey" className="cta-btn cta-btn-violet">
                 <KeyRound size={20} />
                 Try API Key
+              </Link>
+              <Link to="/demo/magic-link" className="cta-btn cta-btn-rose">
+                <Link2 size={20} />
+                Try Magic Link
               </Link>
             </div>
           </div>

@@ -72,3 +72,10 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getBasicProtected = (req, res) => {
+  res.json({
+    message: "Basic Auth successful",
+    user: req.user
+  });
+};

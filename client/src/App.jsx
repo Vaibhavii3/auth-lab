@@ -6,6 +6,7 @@ import BasicAuthDemo from './demos/BasicAuthDemo';
 import JWTDemo from './demos/JWTDemo';
 import SessionDemo from './demos/SessionDemo';
 import ApiKeyDemo from './demos/ApiKeyDemo';
+import MagicLinkDemo from './demos/MagicLinkDemo';
 import './App.css';
 
 function AppContent() {
@@ -63,6 +64,7 @@ function AppContent() {
           <Route path="/demo/jwt" element={<JWTDemo />} />
           <Route path="/demo/session" element={<SessionDemo />} />
           <Route path="/demo/apikey" element={<ApiKeyDemo />} />
+          <Route path="/demo/magic-link" element={<MagicLinkDemo />} />
         </Routes>
       </main>
       

@@ -42,3 +42,18 @@ exports.logout = (req, res) => {
     res.json({ message: "Logged out successfully" });
   });
 };
+
+exports.getProtected = async (req, res) => {
+  try {
+    const user = await User.findById(req.session.userId).select("-password");
+    if (!user) {
+      return res.status(401).json({ message: "Session invalid" });
+    }
+    res.json({
+      message: "Session valid",
+      user: { id: user._id, name: user.name, email: user.email }
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

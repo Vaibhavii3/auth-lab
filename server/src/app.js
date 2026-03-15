@@ -10,6 +10,7 @@ const protectedRoutes = require("./routes/protected.routes");
 const adminRoutes = require("./routes/adminRoleRoutes");
 const userRoutes = require("./routes/user.routes");
 const apiKeyRoutes = require("./routes/apiKeyRoutes");
+const magicLinkRoutes = require("./routes/magicLinkRoutes");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api", protectedRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/api-key", apiKeyRoutes);
+app.use("/api/magic-link", magicLinkRoutes);
 
 app.get("/", (req, res) => {
   res.send("Auth Lab API running");
