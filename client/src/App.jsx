@@ -5,6 +5,7 @@ import AuthLab from './AuthLab';
 import BasicAuthDemo from './demos/BasicAuthDemo';
 import JWTDemo from './demos/JWTDemo';
 import SessionDemo from './demos/SessionDemo';
+import ApiKeyDemo from './demos/ApiKeyDemo';
 import './App.css';
 
 function AppContent() {
@@ -61,6 +62,7 @@ function AppContent() {
           <Route path="/demo/basic" element={<BasicAuthDemo />} />
           <Route path="/demo/jwt" element={<JWTDemo />} />
           <Route path="/demo/session" element={<SessionDemo />} />
+          <Route path="/demo/apikey" element={<ApiKeyDemo />} />
         </Routes>
       </main>
       

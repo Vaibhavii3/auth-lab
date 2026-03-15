@@ -5,6 +5,8 @@ import './DemoPage.css';
 
 const SessionDemo = () => {
   const [activeTab, setActiveTab] = useState('learn');
+  const [authMode, setAuthMode] = useState('login'); // 'login' | 'register'
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +15,31 @@ const SessionDemo = () => {
   const [error, setError] = useState(null);
   const [sessionData, setSessionData] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+
+  const handleRegister = async () => {
+    setLoading(true);
+    setError(null);
+    setRegisterSuccess(false);
+    try {
+      const res = await fetch('http://localhost:5000/api/jwt/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setRegisterSuccess(true);
+        setAuthMode('login');
+      } else {
+        setError(data.message || data.error || 'Registration failed');
+      }
+    } catch (err) {
+      setError('Network error: ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogin = async () => {
     setLoading(true);
@@ -20,7 +47,7 @@ const SessionDemo = () => {
     setResponse(null);
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/session/login', {
+      const res = await fetch('http://localhost:5000/api/session/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include', // Important for cookies
@@ -28,20 +55,22 @@ const SessionDemo = () => {
       });
 
       const data = await res.json();
-      
+
       if (res.ok) {
         setResponse(data);
-        // Get session cookie info
+        // Session cookie name is set in server (authlab.sid)
         const cookies = document.cookie.split(';');
-        const sessionCookie = cookies.find(c => c.trim().startsWith('connect.sid='));
+        const sessionCookie = cookies.find(c => c.trim().startsWith('authlab.sid='));
         if (sessionCookie) {
           setSessionData({
-            cookie: sessionCookie.split('=')[1],
+            cookie: sessionCookie.split('=')[1]?.trim() || '',
             message: 'Session created successfully'
           });
+        } else {
+          setSessionData({ cookie: '(httpOnly - not visible to JS)', message: 'Session created successfully' });
         }
       } else {
-        setError(data.error || 'Authentication failed');
+        setError(data.message || data.error || 'Authentication failed');
       }
     } catch (err) {
       setError('Network error: ' + err.message);
@@ -51,12 +80,17 @@ const SessionDemo = () => {
   };
 
   const handleProtectedRequest = async () => {
+    setError(null);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/session/protected', {
+      const res = await fetch('http://localhost:5000/api/session/protected', {
         credentials: 'include'
       });
       const data = await res.json();
-      setResponse({ ...response, protected: data });
+      if (res.ok) {
+        setResponse(prev => ({ ...prev, protected: data }));
+      } else {
+        setError(data.message || data.error || 'Not authenticated');
+      }
     } catch (err) {
       setError('Failed to access protected route: ' + err.message);
     }
@@ -64,7 +98,7 @@ const SessionDemo = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:5000/api/auth/session/logout', {
+      await fetch('http://localhost:5000/api/session/logout', {
         method: 'POST',
         credentials: 'include'
       });
@@ -335,11 +369,48 @@ app.post('/logout', (req, res) => {
                 <div className="demo-section">
                   <div className="content-card">
                     <h2>Try Session Authentication</h2>
-                    <p>Login to create a server-side session and receive a secure cookie</p>
+                    <p>Register first, then login to create a server-side session</p>
                   </div>
+
+                  {registerSuccess && (
+                    <div className="alert alert-success">
+                      <CheckCircle size={20} />
+                      <span>Account created! Now login below.</span>
+                    </div>
+                  )}
 
                   {!response ? (
                     <div className="demo-form-card">
+                      <div className="auth-mode-tabs">
+                        <button
+                          type="button"
+                          className={authMode === 'register' ? 'auth-tab active' : 'auth-tab'}
+                          onClick={() => { setAuthMode('register'); setError(null); setRegisterSuccess(false); }}
+                        >
+                          Register
+                        </button>
+                        <button
+                          type="button"
+                          className={authMode === 'login' ? 'auth-tab active' : 'auth-tab'}
+                          onClick={() => { setAuthMode('login'); setError(null); }}
+                        >
+                          Login
+                        </button>
+                      </div>
+
+                      {authMode === 'register' && (
+                        <div className="form-group">
+                          <label>Name</label>
+                          <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Your name"
+                            className="form-input"
+                          />
+                        </div>
+                      )}
+
                       <div className="form-group">
                         <label>Email Address</label>
                         <input
@@ -371,26 +442,48 @@ app.post('/logout', (req, res) => {
                         </div>
                       </div>
 
-                      <button
-                        onClick={handleLogin}
-                        disabled={loading || !email || !password}
-                        className="btn-primary btn-large"
-                      >
-                        {loading ? (
-                          <>
-                            <span className="spinner"></span>
-                            Creating Session...
-                          </>
-                        ) : (
-                          <>
-                            <Play size={20} />
-                            Login with Session
-                          </>
-                        )}
-                      </button>
+                      {authMode === 'register' ? (
+                        <button
+                          onClick={handleRegister}
+                          disabled={loading || !name || !email || !password}
+                          className="btn-primary btn-large"
+                        >
+                          {loading ? (
+                            <>
+                              <span className="spinner"></span>
+                              Creating account...
+                            </>
+                          ) : (
+                            <>
+                              <Play size={20} />
+                              Register
+                            </>
+                          )}
+                        </button>
+                      ) : (
+                        <button
+                          onClick={handleLogin}
+                          disabled={loading || !email || !password}
+                          className="btn-primary btn-large"
+                        >
+                          {loading ? (
+                            <>
+                              <span className="spinner"></span>
+                              Creating Session...
+                            </>
+                          ) : (
+                            <>
+                              <Play size={20} />
+                              Login with Session
+                            </>
+                          )}
+                        </button>
+                      )}
 
                       <div className="demo-hint">
-                        💡 Test credentials: <code>demo@authlab.com</code> / <code>password123</code>
+                        {authMode === 'login'
+                          ? '💡 First time? Switch to Register tab above to create an account.'
+                          : '💡 Same account works for JWT and Basic Auth demos too.'}
                       </div>
                     </div>
                   ) : (
@@ -479,7 +572,7 @@ app.post('/logout', (req, res) => {
                         <h3>Session Cookie</h3>
                         <p className="decoded-desc">Secure, httpOnly cookie sent to browser</p>
                         <div className="token-display">
-                          <pre className="token-text">connect.sid={sessionData.cookie}</pre>
+                          <pre className="token-text">authlab.sid={sessionData.cookie}</pre>
                           <button
                             className="btn-copy"
                             onClick={() => copyToClipboard(sessionData.cookie)}
@@ -567,21 +660,43 @@ app.post('/logout', (req, res) => {
                 <div className="request-details">
                   <h4>Endpoint</h4>
                   <pre className="endpoint-block">
-                    POST /api/auth/session/login
+                    {authMode === 'register' ? 'POST /api/jwt/register' : 'POST /api/session/login'}
                   </pre>
 
-                  <h4>Request Headers</h4>
-                  <pre className="request-block">
+                  {authMode === 'register' ? (
+                    <>
+                      <h4>Request Body</h4>
+                      <pre className="request-block">
+                        {JSON.stringify({
+                          name: name || '(required)',
+                          email: email || '(required)',
+                          password: password ? '••••••••' : '(required)'
+                        }, null, 2)}
+                      </pre>
+                    </>
+                  ) : (
+                    <>
+                      <h4>Request Body</h4>
+                      <pre className="request-block">
+                        {JSON.stringify({
+                          email: email || '(required)',
+                          password: password ? '••••••••' : '(required)'
+                        }, null, 2)}
+                      </pre>
+                      <h4>Request Headers</h4>
+                      <pre className="request-block">
 {`Content-Type: application/json
-Cookie: connect.sid=...`}
-                  </pre>
+Cookie: authlab.sid=... (sent after login)`}
+                      </pre>
+                    </>
+                  )}
 
                   {response && (
                     <>
                       <h4>Response Headers</h4>
                       <pre className="headers-block">
-{`Set-Cookie: connect.sid=...;
-  HttpOnly; Secure; SameSite=Strict
+{`Set-Cookie: authlab.sid=...;
+  HttpOnly; SameSite=Lax
 Content-Type: application/json`}
                       </pre>
 

@@ -5,6 +5,8 @@ import './DemoPage.css';
 
 const JWTDemo = () => {
   const [activeTab, setActiveTab] = useState('learn');
+  const [authMode, setAuthMode] = useState('login'); // 'login' | 'register'
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +15,31 @@ const JWTDemo = () => {
   const [error, setError] = useState(null);
   const [showToken, setShowToken] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+
+  const handleRegister = async () => {
+    setLoading(true);
+    setError(null);
+    setRegisterSuccess(false);
+    try {
+      const res = await fetch('http://localhost:5000/api/jwt/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setRegisterSuccess(true);
+        setAuthMode('login');
+      } else {
+        setError(data.message || data.error || 'Registration failed');
+      }
+    } catch (err) {
+      setError('Network error: ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogin = async () => {
     setLoading(true);
@@ -20,19 +47,19 @@ const JWTDemo = () => {
     setResponse(null);
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/jwt/login', {
+      const res = await fetch('http://localhost:5000/api/jwt/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
 
       const data = await res.json();
-      
+
       if (res.ok) {
         setResponse(data);
         localStorage.setItem('jwt_token', data.token);
       } else {
-        setError(data.error || 'Authentication failed');
+        setError(data.message || data.error || 'Authentication failed');
       }
     } catch (err) {
       setError('Network error: ' + err.message);
@@ -49,13 +76,17 @@ const JWTDemo = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/jwt/protected', {
+      const res = await fetch('http://localhost:5000/api/dashboard', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
       const data = await res.json();
-      setResponse({ ...response, protected: data });
+      if (res.ok) {
+        setResponse(prev => ({ ...prev, protected: data }));
+      } else {
+        setError(data.message || data.error || 'Failed to access protected route');
+      }
     } catch (err) {
       setError('Failed to access protected route: ' + err.message);
     }
@@ -293,7 +324,7 @@ const authenticate = (req, res, next) => {
                       <pre className="code-block">
 {`// Login and store token
 const login = async (email, password) => {
-  const res = await fetch('/api/auth/jwt/login', {
+  const res = await fetch('/api/jwt/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password })
@@ -325,10 +356,47 @@ const fetchProtected = async () => {
                 <div className="demo-section">
                   <div className="content-card">
                     <h2>Try JWT Authentication</h2>
-                    <p>Enter credentials to receive a JWT token and see it in action</p>
+                    <p>Register first, then login to receive a JWT token</p>
                   </div>
 
+                  {registerSuccess && (
+                    <div className="alert alert-success">
+                      <CheckCircle size={20} />
+                      <span>Account created! Now login below.</span>
+                    </div>
+                  )}
+
                   <div className="demo-form-card">
+                    <div className="auth-mode-tabs">
+                      <button
+                        type="button"
+                        className={authMode === 'register' ? 'auth-tab active' : 'auth-tab'}
+                        onClick={() => { setAuthMode('register'); setError(null); setRegisterSuccess(false); }}
+                      >
+                        Register
+                      </button>
+                      <button
+                        type="button"
+                        className={authMode === 'login' ? 'auth-tab active' : 'auth-tab'}
+                        onClick={() => { setAuthMode('login'); setError(null); }}
+                      >
+                        Login
+                      </button>
+                    </div>
+
+                    {authMode === 'register' && (
+                      <div className="form-group">
+                        <label>Name</label>
+                        <input
+                          type="text"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Your name"
+                          className="form-input"
+                        />
+                      </div>
+                    )}
+
                     <div className="form-group">
                       <label>Email Address</label>
                       <input
@@ -360,26 +428,48 @@ const fetchProtected = async () => {
                       </div>
                     </div>
 
-                    <button
-                      onClick={handleLogin}
-                      disabled={loading || !email || !password}
-                      className="btn-primary btn-large"
-                    >
-                      {loading ? (
-                        <>
-                          <span className="spinner"></span>
-                          Authenticating...
-                        </>
-                      ) : (
-                        <>
-                          <Play size={20} />
-                          Login with JWT
-                        </>
-                      )}
-                    </button>
+                    {authMode === 'register' ? (
+                      <button
+                        onClick={handleRegister}
+                        disabled={loading || !name || !email || !password}
+                        className="btn-primary btn-large"
+                      >
+                        {loading ? (
+                          <>
+                            <span className="spinner"></span>
+                            Creating account...
+                          </>
+                        ) : (
+                          <>
+                            <Play size={20} />
+                            Register
+                          </>
+                        )}
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleLogin}
+                        disabled={loading || !email || !password}
+                        className="btn-primary btn-large"
+                      >
+                        {loading ? (
+                          <>
+                            <span className="spinner"></span>
+                            Authenticating...
+                          </>
+                        ) : (
+                          <>
+                            <Play size={20} />
+                            Login with JWT
+                          </>
+                        )}
+                      </button>
+                    )}
 
                     <div className="demo-hint">
-                      💡 Test credentials: <code>demo@authlab.com</code> / <code>password123</code>
+                      {authMode === 'login'
+                        ? '💡 First time? Switch to Register tab above to create an account.'
+                        : '💡 After registering, use the same email/password in Login and in Basic Auth (email = username).'}
                     </div>
                   </div>
 
@@ -539,12 +629,21 @@ const fetchProtected = async () => {
                 <div className="request-details">
                   <h4>Endpoint</h4>
                   <pre className="endpoint-block">
-                    POST /api/auth/jwt/login
+                    {authMode === 'register' ? 'POST /api/jwt/register' : 'POST /api/jwt/login'}
                   </pre>
 
                   <h4>Request Body</h4>
                   <pre className="request-block">
-                    {JSON.stringify({ email, password: password ? '••••••••' : '' }, null, 2)}
+                    {authMode === 'register'
+                      ? JSON.stringify({
+                          name: name || '(required)',
+                          email: email || '(required)',
+                          password: password ? '••••••••' : '(required)'
+                        }, null, 2)
+                      : JSON.stringify({
+                          email: email || '(required)',
+                          password: password ? '••••••••' : '(required)'
+                        }, null, 2)}
                   </pre>
 
                   {response && (

@@ -258,6 +258,7 @@
 .method-card-amber { --card-color: var(--basic-color); }
 .method-card-cyan { --card-color: var(--jwt-color); }
 .method-card-emerald { --card-color: var(--session-color); }
+.method-card-violet { --card-color: var(--apikey-color); }
 
 .card-header {
   display: flex;
@@ -473,7 +474,8 @@
 
 .th-basic,
 .th-jwt,
-.th-session {
+.th-session,
+.th-apikey {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -482,6 +484,7 @@
 .th-basic { color: var(--basic-color); }
 .th-jwt { color: var(--jwt-color); }
 .th-session { color: var(--session-color); }
+.th-apikey { color: var(--apikey-color); }
 
 .comparison-table tbody tr {
   transition: background 0.2s ease;
@@ -589,6 +592,12 @@
   color: var(--session-color);
 }
 
+.cta-btn-violet {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: var(--apikey-color);
+  color: var(--apikey-color);
+}
+
 .cta-btn:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 30px currentColor;
@@ -606,6 +615,11 @@
 
 .cta-btn-emerald:hover {
   background: linear-gradient(135deg, var(--session-color) 0%, #059669 100%);
+  color: white;
+}
+
+.cta-btn-violet:hover {
+  background: linear-gradient(135deg, var(--apikey-color) 0%, #7c3aed 100%);
   color: white;
 }
 

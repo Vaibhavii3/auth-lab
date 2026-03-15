@@ -18,8 +18,9 @@ const BasicAuthDemo = () => {
     setError(null);
     setResponse(null);
 
+    // Backend expects email:password for Basic Auth (email as "username")
     const credentials = btoa(`${username}:${password}`);
-    
+
     try {
       const res = await fetch('http://localhost:5000/api/auth/protected', {
         headers: {
@@ -36,7 +37,7 @@ const BasicAuthDemo = () => {
           decodedCredentials: `${username}:${password}`
         });
       } else {
-        setError(data.error || 'Authentication failed');
+        setError(data.message || data.error || 'Authentication failed');
       }
     } catch (err) {
       setError('Network error: ' + err.message);
@@ -279,12 +280,12 @@ fetch('https://api.example.com/data', {
 
                   <div className="demo-form-card">
                     <div className="form-group">
-                      <label>Username</label>
+                      <label>Email (used as username)</label>
                       <input
-                        type="text"
+                        type="email"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        placeholder="demo"
+                        placeholder="demo@authlab.com"
                         className="form-input"
                       />
                     </div>
@@ -328,7 +329,7 @@ fetch('https://api.example.com/data', {
                     </button>
 
                     <div className="demo-hint">
-                      💡 Test credentials: <code>demo</code> / <code>password123</code>
+                      💡 Use your registered <strong>email</strong> as username (e.g. <code>demo@authlab.com</code>) and password (e.g. <code>password123</code>). Register first via JWT or Session demo.
                     </div>
                   </div>
 
@@ -461,7 +462,7 @@ fetch('https://api.example.com/data', {
                 <div className="request-details">
                   <h4>Endpoint</h4>
                   <pre className="endpoint-block">
-                    GET /api/auth/basic/protected
+                    GET /api/auth/protected
                   </pre>
 
                   <h4>Request Headers</h4>

@@ -9,6 +9,7 @@ const jwtRoutes = require("./routes/jwtRoutes");
 const protectedRoutes = require("./routes/protected.routes");
 const adminRoutes = require("./routes/adminRoleRoutes");
 const userRoutes = require("./routes/user.routes");
+const apiKeyRoutes = require("./routes/apiKeyRoutes");
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api/jwt", jwtRoutes);
 app.use("/api", protectedRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/api-key", apiKeyRoutes);
 
 app.get("/", (req, res) => {
   res.send("Auth Lab API running");

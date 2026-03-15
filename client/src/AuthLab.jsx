@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Key, Cookie, Zap, Lock, CheckCircle, XCircle, ArrowRight } from 'lucide-react';
+import { Shield, Key, Cookie, Zap, Lock, CheckCircle, XCircle, ArrowRight, KeyRound } from 'lucide-react';
 import './AuthLab.css';
 
 const AuthLab = () => {
@@ -51,6 +51,21 @@ const AuthLab = () => {
       pros: ['Easy to revoke', 'Server controls state', 'Smaller cookies'],
       cons: ['Requires server storage', 'Scaling complexity', 'CORS challenges'],
       emoji: '🍪'
+    },
+    {
+      id: 'apikey',
+      name: 'API Key',
+      icon: KeyRound,
+      color: 'violet',
+      gradient: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+      description: 'Send a secret key in header (X-API-Key) for server-to-server or dev access',
+      difficulty: 'Beginner',
+      security: '⭐⭐⭐',
+      useCase: 'APIs, Scripts, Internal Tools',
+      link: '/demo/apikey',
+      pros: ['Simple', 'Easy to revoke', 'No cookies/sessions'],
+      cons: ['Key can leak', 'No built-in expiry', 'One key per client'],
+      emoji: '🔐'
     }
   ];
 
@@ -256,6 +271,10 @@ const authenticate = async () => {
                     <Cookie size={18} />
                     Session
                   </th>
+                  <th className="th-apikey">
+                    <KeyRound size={18} />
+                    API Key
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -264,35 +283,41 @@ const authenticate = async () => {
                   <td>Headers (per request)</td>
                   <td>Client (localStorage/cookie)</td>
                   <td>Server (database/memory)</td>
+                  <td>Header (X-API-Key)</td>
                 </tr>
                 <tr>
                   <td className="feature-name">Scalability</td>
                   <td>⭐⭐</td>
                   <td>⭐⭐⭐⭐⭐</td>
                   <td>⭐⭐⭐</td>
+                  <td>⭐⭐⭐⭐</td>
                 </tr>
                 <tr>
                   <td className="feature-name">Security Level</td>
                   <td>⭐⭐</td>
                   <td>⭐⭐⭐⭐</td>
                   <td>⭐⭐⭐⭐⭐</td>
+                  <td>⭐⭐⭐</td>
                 </tr>
                 <tr>
                   <td className="feature-name">Implementation</td>
                   <td>Very Simple</td>
                   <td>Medium</td>
                   <td>Medium</td>
+                  <td>Simple</td>
                 </tr>
                 <tr>
                   <td className="feature-name">Cross-Domain</td>
                   <td>✅ Yes</td>
                   <td>✅ Yes</td>
                   <td>⚠️ CORS Issues</td>
+                  <td>✅ Yes</td>
                 </tr>
                 <tr>
                   <td className="feature-name">Token Revocation</td>
                   <td>N/A</td>
                   <td>❌ Difficult</td>
+                  <td>✅ Easy</td>
                   <td>✅ Easy</td>
                 </tr>
                 <tr>
@@ -300,12 +325,14 @@ const authenticate = async () => {
                   <td>✅ Good</td>
                   <td>✅ Best</td>
                   <td>⚠️ Challenging</td>
+                  <td>✅ Good</td>
                 </tr>
                 <tr>
                   <td className="feature-name">Server Load</td>
                   <td>Low</td>
                   <td>Very Low</td>
                   <td>Medium-High</td>
+                  <td>Low</td>
                 </tr>
               </tbody>
             </table>
@@ -331,6 +358,10 @@ const authenticate = async () => {
               <Link to="/demo/session" className="cta-btn cta-btn-emerald">
                 <Cookie size={20} />
                 Try Sessions
+              </Link>
+              <Link to="/demo/apikey" className="cta-btn cta-btn-violet">
+                <KeyRound size={20} />
+                Try API Key
               </Link>
             </div>
           </div>
